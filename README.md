@@ -6,19 +6,35 @@ For people struggling with non-semantic html.
 
 Add this line to your application's Gemfile:
 
-    gem 'wildcard_finders'
+```sh
+gem 'wildcard_finders'
+```
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install wildcard_finders
+```sh
+$ gem install wildcard_finders
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+it "can find image using regexp" do
+  page.find_img_like :src => /\.png$/ # => <Capybara::Node> # first img tag which is png
+
+  page.should have_img_like    :src => /\.jpg$/ # => expect at least one img tag of jpg
+  page.should have_no_img_like :src => /\.bmp$/ # => expect no img tag of bmp
+end
+```
+
+See WildcardFinders::Finders::METHODS for ohter available finders.
+Every finder has automatically have matchers: both has_xxx_like? and has_no_xxx_like?.
 
 ## Contributing
 
