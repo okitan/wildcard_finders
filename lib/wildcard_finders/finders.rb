@@ -30,7 +30,9 @@ module WildcardFinders
       "img" => %w[ image  ],
     }.each do |tag, synonyms|
       synonyms.each do |synonym|
-        alias "find_#{synonym}_like".to_sym "find_#{tag}_like".to_sym
+        module_eval %{
+          alias find_#{synonym}_like find_#{tag}_like
+        end
       end
     end
   end
