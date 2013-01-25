@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["okitan"]
   gem.email         = ["okitakunio@gmail.com"]
   gem.description   = "finders for capybara"
-  gem.summary       = "finders for capybara for people strugling non-semantic doms"
+  gem.summary       = "finders for people strugling non-semantic doms"
   gem.homepage      = "https://github.com/okitan/wildcard_finders"
 
   gem.files         = `git ls-files`.split($/)
