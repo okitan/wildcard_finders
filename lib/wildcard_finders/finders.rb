@@ -32,7 +32,7 @@ module WildcardFinders
       synonyms.each do |synonym|
         module_eval %{
           alias find_#{synonym}_like find_#{tag}_like
-        end
+        }
       end
     end
   end
