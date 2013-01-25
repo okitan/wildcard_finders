@@ -19,12 +19,19 @@ module WildcardFinders
     end
 
     # I'll never add semantic tags
-    %w[ image a input form link ].each do |name|
+    %w[ img a input form link ].each do |name|
       define_method("find_#{name}_like") do |matcher, opts = {}|
         find_tag_like(name, matcher, opts)
       end
     end
 
-    alias find_anchor_like find_a_like
+    # synonym
+    { "a"   => %w[ anchor ],
+      "img" => %w[ image  ],
+    }.each do |tag, synonyms|
+      synonyms.each do |synonym|
+        alias "find_#{synonym}_like".to_sym "find_#{tag}_like".to_sym
+      end
+    end
   end
 end
