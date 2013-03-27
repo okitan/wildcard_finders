@@ -1,4 +1,4 @@
-# wildcard_finders
+# wildcard_finders [![Build Status](https://secure.travis-ci.org/okitan/wildcard_finders.png?branch=master)](http://travis-ci.org/okitan/wildcard_finders) [![Dependency Status](https://gemnasium.com/okitan/wildcard_finders.png)](https://gemnasium.com/okitan/wildcard_finders)
 
 For people struggling with non-semantic html.
 
