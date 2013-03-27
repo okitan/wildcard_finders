@@ -12,11 +12,19 @@ describe WildcardFinders::Finders do
     end
 
     with_them do
-      it do
-        example.description.replace("with hash #{attr} => #{value.inspect} matches")
-
+      it "with hash as matcher ({ attr => value }) finds" do
         visit "/a"
         page.find_anchor_like(attr => value)[:id].should == expected_id
+      end
+
+      it "with block as matcher ({|e| value === e[attr] }) finds" do
+        visit "/a"
+        page.find_anchor_like {|e| value === e[attr] }[:id].should == expected_id
+      end
+
+      it "with proc as matcher (->(e) { value === e[attr] }) finds" do
+        visit "/a"
+        page.find_anchor_like(->(e) { value === e[attr] })[:id].should == expected_id
       end
     end
   end
