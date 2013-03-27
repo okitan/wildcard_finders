@@ -3,12 +3,21 @@ require "spec_helper"
 describe WildcardFinders::Finders do
   include WildcardFinders::Finders
 
-  it "find_anchor_like works with hash" do
-    visit "/a"
+  context ".find_anchor_like" do
+    where(:attr, :value, :expected_id) do
+      [ [ :href,    /hoge/, "href_hoge" ],
+        [ :href,    /fuga/, "href_fuga" ],
+        [ :onclick, /hoge/, "onclick_hoge" ],
+      ]
+    end
 
-    page.find_anchor_like(href: /hoge/)[:id].should == "href_hoge"
-    page.find_anchor_like(href: /fuga/)[:id].should == "href_fuga"
+    with_them do
+      it do
+        example.description.replace("with hash #{attr} => #{value.inspect} matches")
 
-    page.find_anchor_like(onclick: /hoge/)[:id].should == "onclick_hoge"
+        visit "/a"
+        page.find_anchor_like(attr => value)[:id].should == expected_id
+      end
+    end
   end
 end

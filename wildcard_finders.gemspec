@@ -20,6 +20,13 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "rake"
   gem.add_development_dependency "rspec"
+  gem.add_development_dependency "rspec-parameterized"
+
+  # for test app
   gem.add_development_dependency "sinatra"
   gem.add_development_dependency "slim"
+
+  # for debug
+  gem.add_development_dependency "tapp"
+  gem.add_development_dependency "pry"
 end

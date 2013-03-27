@@ -3,6 +3,7 @@ require "bundler/setup"
 require "wildcard_finders"
 
 require "capybara/rspec"
+require "rspec/parameterized"
 
 require "test_app"
 
