@@ -1,1 +1,1 @@
-rvm gemset use wildcard_finders
+rvm gemset use wildcard_finders --create

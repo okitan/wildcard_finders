@@ -17,4 +17,9 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "capybara"
   gem.add_dependency "wildcard_matchers"
+
+  gem.add_development_dependency "rake"
+  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "sinatra"
+  gem.add_development_dependency "slim"
 end
