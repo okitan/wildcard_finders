@@ -7,6 +7,7 @@ gemfile:
   - Gemfile
   - Gemfile_for_capybara_1.x
   - Gemfile_for_capybara_2.0.x
-exclude:
-  - rvm: 1.9.2
-    gemfile: Gemfile
+matrix:
+  exclude:
+    - rvm: 1.9.2
+      gemfile: Gemfile
