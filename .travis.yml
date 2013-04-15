@@ -3,3 +3,10 @@ rvm:
   - 1.9.2
   - 1.9.3
   - 2.0.0
+gemfile:
+  - Gemfile
+  - Gemfile_for_capybara_1.x
+  - Gemfile_for_capybara_2.0.x
+exclude:
+  - rvm: 1.9.2
+    gemfile: Gemfile
