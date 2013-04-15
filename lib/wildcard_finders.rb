@@ -17,7 +17,8 @@ module Capybara
     [ ::WildcardFinders::Finders::METHODS, ::WildcardFinders::Matchers::METHODS ].flatten.each do |method|
       define_method(method) do |*args, &block|
         @touched = true
-        current_node.__send__(method, *args, &block)
+        scope = self.respond_to?(:current_scope) ? current_scope : current_node # difference between 2.0 and 2.1
+        scope.__send__(method, *args, &block)
       end
     end
   end

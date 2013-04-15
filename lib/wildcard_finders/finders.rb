@@ -1,4 +1,5 @@
 require "capybara/node/finders"
+require "xpath"
 
 module WildcardFinders
   module Finders
@@ -6,20 +7,37 @@ module WildcardFinders
 
     # not to add METHODS
     def find_tag_like(tag, matcher = nil, opts = {}, &block)
-      tags = all(tag).select do |e|
-        if matcher.is_a?(Hash)
-          hash = matcher.keys.each_with_object({}) {|key, h| h[key] = e[key] }
-          WildcardMatchers.wildcard_match?(hash, matcher)
-        elsif block_given? or matcher.is_a?(Proc)
-          WildcardMatchers.wildcard_match?(e, block || matcher)
-        elsif matcher # I don't know this behavior
-          WildcardMatchers.wildcard_match?(e, matcher)
-        else
-          raise "no matcher or block is not given"
+      if matcher.is_a?(Hash) && matcher.values.all? {|v| v.is_a?(String) }
+        find_exactly(tag, matcher)
+      else
+        all(tag).select do |e|
+          if matcher.is_a?(Hash)
+            hash = matcher.keys.each_with_object({}) {|key, h| h[key] = e[key] }
+            WildcardMatchers.wildcard_match?(hash, matcher)
+          else
+            WildcardMatchers.wildcard_match?(e, block || matcher)
+          end
+        end.first # not compatible with capybara 2.x
+      end
+    end
+
+    def find_exactly(tag, matcher)
+      xpath = XPath.generate do |x|
+        attr_matcher = matcher.map do |key, value|
+          case key
+          when :text
+            x.text.equals(value)
+          when :class
+            x.attr(:class).contains(value)
+          else
+            x.attr(key).equals(value)
+          end
         end
+
+        x.descendant(tag.to_sym)[attr_matcher.inject(&:&)]
       end
 
-      tags.first # not compatible with capybara 2.x
+      find(:xpath, xpath)
     end
 
     def self.method_added(name)
