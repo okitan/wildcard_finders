@@ -37,7 +37,11 @@ module WildcardFinders
         x.descendant(tag.to_sym)[attr_matcher.inject(&:&)]
       end
 
-      find(:xpath, xpath)
+      begin
+        find(:xpath, xpath)
+      rescue Capybara::ElementNotFound
+        nil
+      end
     end
 
     def self.method_added(name)

@@ -61,5 +61,19 @@ describe WildcardFinders::Finders do
       end
     end
 
+    context "when not matched" do
+      where(:attr, :value) do
+        [ [ :href, /not_matched/ ],
+          [ :href, "not_matched" ],
+        ]
+      end
+
+      with_them do
+        it "returns nil" do
+          visit "/a"
+          page.find_anchor_like(attr => value).should be_nil
+        end
+      end
+    end
   end
 end
