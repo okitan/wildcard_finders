@@ -18,7 +18,7 @@ module WildcardFinders
 
           __send__(wait_method) do
             result = __send__(method, *args, &block)
-            result or raise Capybara::ExpectationNotMet, "no results for #{matcher_method}:#{args}"
+            result or return(false)
           end
 
           true
@@ -29,7 +29,7 @@ module WildcardFinders
 
           __send__(wait_method) do
             result = __send__(method, *args, &block)
-            result and raise Capybara::ExpectationNotMet, "some results for #{matcher_method}:#{args}"
+            result and return(false)
           end
 
           true
