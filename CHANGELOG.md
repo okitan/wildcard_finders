@@ -1,3 +1,7 @@
+# 0.1.0
+* CHANGE
+ * has_xxx_like? and has_no_xxx_like? returns true or false (stop raising errors)
+
 # 0.0.4
 * FIX
  * bug of find_exactly raise ElementNotFound error and have_no_xxx_like fail
