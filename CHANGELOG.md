@@ -1,3 +1,7 @@
+# 0.1.1
+* ENHANCEMENT
+ * have_xxx_like matcher allows block to use
+
 # 0.1.0
 * CHANGE
  * has_xxx_like? and has_no_xxx_like? returns true or false (stop raising errors)
