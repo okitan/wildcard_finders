@@ -71,7 +71,7 @@ describe WildcardFinders::Finders do
       with_them do
         it "returns nil" do
           visit "/a"
-          page.find_anchor_like(attr => value).should be_nil
+          expect { page.find_anchor_like(attr => value) }.to raise_exception(Capybara::ElementNotFound)
         end
       end
     end

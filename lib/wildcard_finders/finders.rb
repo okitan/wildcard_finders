@@ -6,18 +6,31 @@ module WildcardFinders
     METHODS = []
 
     # not to add METHODS
+    # FIXME: opts is not used. what was that?
     def find_tag_like(tag, matcher = nil, opts = {}, &block)
       if matcher.is_a?(Hash) && matcher.values.all? {|v| v.is_a?(String) }
         find_exactly(tag, matcher)
       else
-        all(tag).select do |e|
-          if matcher.is_a?(Hash)
-            hash = matcher.keys.each_with_object({}) {|key, h| h[key] = e[key] }
-            WildcardMatchers.wildcard_match?(hash, matcher)
-          else
-            WildcardMatchers.wildcard_match?(e, block || matcher)
+        wait_method = respond_to?(:synchronize) ? :synchronize : :wait_until
+
+        results = []
+        __send__(wait_method) do
+          results = all(tag).select do |element|
+            if matcher.is_a?(Hash)
+              hash_from_element = matcher.keys.each_with_object({}) {|key, h| h[key] = element[key] }
+              WildcardMatchers.wildcard_match?(hash_from_element, matcher)
+            else
+              WildcardMatchers.wildcard_match?(element, block || matcher)
+            end
           end
-        end.first # not compatible with capybara 2.x
+        end
+
+        if results.empty?
+          raise Capybara::ElementNotFound, "no <#{tag}> to match #{matcher}"
+        else
+          # not compatible for capybara 2.0
+          results.first
+        end
       end
     end
 
@@ -37,11 +50,7 @@ module WildcardFinders
         x.descendant(tag.to_sym)[attr_matcher.inject(&:&)]
       end
 
-      begin
-        find(:xpath, xpath)
-      rescue Capybara::ElementNotFound
-        nil
-      end
+      find(:xpath, xpath)
     end
 
     def self.method_added(name)

@@ -19,25 +19,21 @@ module WildcardFinders
         rspec_no_matcher_method_without_block = method.to_s.sub("find", "have_no") + "_without_block"
 
         define_method(matcher_method) do |*args, &block|
-          wait_method = respond_to?(:synchronize) ? :synchronize : :wait_until
-
-          __send__(wait_method) do
-            result = __send__(method, *args, &block)
-            result or return(false)
+          begin
+            __send__(method, *args, &block)
+            true
+          rescue ::Capybara::ElementNotFound
+            false
           end
-
-          true
         end
 
         define_method(no_matcher_method) do |*args, &block|
-          wait_method = respond_to?(:synchronize) ? :synchronize : :wait_until
-
-          __send__(wait_method) do
-            result = __send__(method, *args, &block)
-            result and return(false)
+          begin
+            __send__(method, *args, &block)
+            false
+          rescue ::Capybara::ElementNotFound
+            true
           end
-
-          true
         end
 
         RSpec::Matchers.define(rspec_matcher_method_without_block) do |expected|
