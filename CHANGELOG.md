@@ -1,3 +1,8 @@
+# 0.2.0
+* CHANGE
+ * find_xxx_like raise errors when element not found
+ * find_xxx_like waits Capybara.default_wait_time
+
 # 0.1.1
 * ENHANCEMENT
  * have_xxx_like matcher allows block to use
