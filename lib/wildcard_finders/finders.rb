@@ -23,14 +23,12 @@ module WildcardFinders
               WildcardMatchers.wildcard_match?(element, block || matcher)
             end
           end
+
+          raise Capybara::ElementNotFound, "no <#{tag}> to match #{matcher}" if results.empty?
         end
 
-        if results.empty?
-          raise Capybara::ElementNotFound, "no <#{tag}> to match #{matcher}"
-        else
-          # not compatible for capybara 2.0
-          results.first
-        end
+        # not compatible for capybara 2.0
+        results.first
       end
     end
 
