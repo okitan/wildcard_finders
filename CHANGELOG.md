@@ -1,3 +1,7 @@
+# 0.2.1
+* FIX
+ * bug of wait
+
 # 0.2.0
 * CHANGE
  * find_xxx_like raise errors when element not found
