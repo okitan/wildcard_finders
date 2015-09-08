@@ -1,5 +1,4 @@
 require "capybara/node/matchers"
-require "tapp"
 module WildcardFinders
   module Matchers
     METHODS = []
